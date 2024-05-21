@@ -1,0 +1,219 @@
+---
+title: "Class 5: Data visualization with ggplot"
+author: "Norhan Turki (PID: A15671667)"
+format: pdf
+toc: true
+---
+
+Today we will have our first play with the **ggplot2** package - one of the most popular graphics packages on the planet. 
+
+There are many plotting systems in R. These include so-called *"base"* plotting/graphics.
+
+```{r}
+plot(cars)
+```
+
+Base plot is generally rather short code and somewhat dull plots - but it is always there for you and is fast for big datasets. 
+
+
+If I want to use **ggplot2** it takes some more work. 
+
+```{r}
+# ggplot(cars)
+```
+
+I need to instakk the package first to my computer. To do this I can use the function `install.packages("ggplot2")`. 
+
+Every time I want to use a package I need to load it up with a `library()` call.
+
+
+```{r}
+library(ggplot2)
+```
+
+
+Now i can finally use ggplot.
+
+```{r}
+ggplot(cars)
+```
+
+Every ggplot has at least 3 things:
+
+- **data** (the data.frame with the data you want to plot)
+- **aes** (the aesthetic mapping fo the data to the plot)
+- **geom** (how do you want the plot to look, points, lines, etc.)
+
+```{r}
+head(cars)
+```
+
+```{r}
+ggplot(cars) + aes(x=speed, y=dist) + geom_point(
+) + geom_smooth()
+```
+
+I want a linear model and no standard error bounds shown on my plot. I also want nicer axis labels a title etc. 
+
+```{r}
+bp <- ggplot(cars) + aes(x=speed, y=dist) + geom_point(
+)
+```
+```{r}
+bp
+```
+```{r}
+bp + geom_smooth(se=FALSE, method="lm") + labs(title="Stopping Distance of Old Cars", x="Speed (MPH)", y="Distance(ft)", caption= "From the cars dataset") + theme_bw()
+```
+
+
+
+
+
+
+
+
+
+
+## A more complicated scatterplot
+
+Here we make a plot of gene expression data:
+
+```{r}
+url <- "https://bioboot.github.io/bimm143_S20/class-material/up_down_expression.txt"
+genes <- read.delim(url)
+head(genes)
+```
+
+Q. Use the nrow() function to find out how many genes are in this dataset. What is your answer? 5196
+
+```{r}
+nrow(genes)
+```
+
+Q. Use the colnames() function and the ncol() function on the genes data frame to find out what the column names are (we will need these later) and how many columns there are. How many columns did you find? 4
+
+```{r}
+colnames(genes)
+```
+```{r}
+ncol(genes)
+```
+
+Q.Use the table() function on the State column of this data.frame to find out how many ‘up’ regulated genes there are. What is your answer? 127
+```{r}
+table(genes$State)
+```
+Q. Using your values above and 2 significant figures. What fraction of total genes is up-regulated in this dataset? 2.44
+```{r}
+round(sum(genes$State == "up")/ nrow(genes) * 100, 2)
+```
+Or you can use this "better" chunk of code.
+```{r}
+n.gene <- nrow(genes)
+n.up <- sum(genes$State == "up")
+
+up.percent <- n.up/n.gene * 100
+round(up.percent, 2)
+```
+
+```{r}
+head(genes, 2)
+```
+
+```{r}
+ggplot(genes) + aes(x=Condition1, y=Condition2, col=State) + geom_point() 
+```
+Change the colors
+```{r}
+p <- ggplot(genes) + 
+    aes(x=Condition1, y=Condition2, col=State) +
+    geom_point() 
+```
+```{r}
+p
+```
+
+```{r}
+pp <-p + scale_colour_manual( values=c("blue","gray","red") )
+```
+```{r}
+pp + labs(title="Gene Expression changes on Drug Treatment", x="Control (no drug)", y="Treatment (drug)")
+```
+## Exploring ther gapminder dataset
+
+Here we will load up the gapminder dataset to get practice with different aes mappings.
+
+```{r}
+# File location online
+url <- "https://raw.githubusercontent.com/jennybc/gapminder/master/inst/extdata/gapminder.tsv"
+
+gapminder <- read.delim(url)
+```
+
+> Q. How many entry rows are in this dataset? 1704
+
+```{r}
+nrow(gapminder)
+```
+
+> Q. How many columns? 6
+
+```{r}
+ncol(gapminder)
+```
+
+```{r}
+head(gapminder)
+```
+
+```{r}
+table(gapminder$year)
+```
+> Q. How many continents do we have in this dataset? 5
+
+```{r}
+table(gapminder$continent)
+```
+I could use the `unique()` function...
+
+```{r}
+length(unique(gapminder$continent))
+```
+
+> Q. How many countries do we have in this dataset? 142
+
+```{r}
+length(unique(gapminder$country))
+```
+
+```{r}
+ggplot(gapminder) + aes(x=gdpPercap, y=lifeExp) + geom_point(alpha=0.2)
+```
+Put color in the geom instead of the aes for this. If you want it to come form the data use aes.
+```{r}
+ggplot(gapminder) + aes(x=gdpPercap, y=lifeExp) + geom_point(col="red") 
+```
+
+```{r}
+library(dplyr)
+
+gapminder_2007 <- filter(gapminder, year==2007)
+head(gapminder_2007)
+```
+
+Plot of 2007 with population and continent data
+
+```{r}
+ggplot(gapminder_2007) + aes(x=gdpPercap, y=lifeExp, col=continent, size=pop)+ geom_point(alpha=0.5)
+```
+
+```{r}
+ggplot(gapminder) + aes(x=gdpPercap, y=lifeExp) + geom_point() + facet_wrap(~year)
+```
+
+```{r}
+ggplot(gapminder) + aes(x=gdpPercap, y=lifeExp) + geom_point() + facet_wrap(~continent)
+```
+
+
