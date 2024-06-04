@@ -3,6 +3,6 @@ My classwork for [BIMM143 Spring 2024](https://bioboot.github.io/bimm143_S24/) a
 
 - **Class 5** [Data visulization with ggplot](class05/class05.md)
 
-- **Class 7** [Machine Learning 1](https://github.com/nnxxtt/bimm143_github/tree/main/class07)
+- **Class 7** [Machine Learning 1](class07/class07.md)
 
 - **Class 9** [Halloween Candy Mini-Project](https://github.com/nnxxtt/bimm143_github/tree/main/class09/class09_files)
