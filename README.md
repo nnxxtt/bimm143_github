@@ -1,7 +1,7 @@
 # Nour's Portfolio
 My classwork for [BIMM143 Spring 2024](https://bioboot.github.io/bimm143_S24/) at UC San Diego
 
-- **Class 5** [Data visulization with ggplot](https://github.com/nnxxtt/bimm143_github/tree/main/class05/class05_files)
+- **Class 5** [Data visulization with ggplot](class05/class05.md)
 
 - **Class 7** [Machine Learning 1](https://github.com/nnxxtt/bimm143_github/tree/main/class07)
 
