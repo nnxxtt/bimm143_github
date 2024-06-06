@@ -3,4 +3,4 @@ My classwork for [BIMM143 Spring 2024](https://bioboot.github.io/bimm143_S24/) a
 
 - **Class 5** [Data visulization with ggplot](class05/class05.md)
 
-- **Class 7** [Machine Learnign 1]()
+- **Class 7** [Machine Learning 1]()
